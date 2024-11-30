@@ -1,26 +1,20 @@
-import Image from "next/image";
+"use client"
 import Header from "./components/Header";
-import Modal,{ ModalProps } from "./components/Modal"
-
+import LoginModal from "./components/modals/LoginModal";
+import RegisterModal from "./components/modals/RegisterModal";
 
 
 export default function Home() {
-
-  const modalProps: ModalProps = {
-    isOpen: true,
-    title: "My Modal",
-    actionLabel: "Submit",
-    onClose: () => console.log("Modal closed"),
-    onSubmit: () => console.log("Form submitted"),
-};
-
   
   return (
    <>
+
+    <LoginModal />
+    <RegisterModal />
     
     <Header showBackArrow label="Home"/>
 
-    <Modal {...modalProps} />
+    
     
    </>
   );

@@ -1,3 +1,4 @@
+"use client"
 import { useCallback } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "./Button";
@@ -7,7 +8,7 @@ export interface ModalProps {
     title?: String;
     body?: JSX.Element;
     footer?: JSX.Element;
-    actionLabel?: String;
+    actionLabel?: string;
     disabled?: Boolean;
     onClose: () => void;
     onSubmit: () => void;
@@ -138,7 +139,9 @@ const Modal = ({
                         </div>
                         {/* Footer */}
                         <div className="flex flex-col gap-2 p-10">
-                            <Button/>
+
+                            <Button disabled={disabled} label={actionLabel} secondary fullWidth onClick={handleSubmit}/>
+                            {footer}
 
                         </div>
 

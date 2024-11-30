@@ -24,7 +24,7 @@ const Button = ({
             `
                 disabled:opacity-78
                 disabled:cursor-not-allowed
-                round-full
+                rounded-full
                 font-semibold
                 hover:opacity-400
                 transition
