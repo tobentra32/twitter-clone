@@ -37,6 +37,8 @@ const Modal = ({
     },[disabled, onClose]);
 
     const handleSubmit = useCallback(()=>{
+
+        console.log('trying to subit');
         if (disabled) {
             return;
         }
@@ -48,6 +50,7 @@ const Modal = ({
     if (!isOpen) {
         return null;
     }
+    
 
 
     
@@ -125,9 +128,7 @@ const Modal = ({
                             hover:opacity-70
                             transition
                           
-                          "
-
-                        
+                          "           
                         >
                             <AiOutlineClose size={20}/>
                         </button>
@@ -140,7 +141,7 @@ const Modal = ({
                         {/* Footer */}
                         <div className="flex flex-col gap-2 p-10">
 
-                            <Button disabled={disabled} label={actionLabel} secondary fullWidth onClick={handleSubmit}/>
+                            <Button label={actionLabel} secondary fullWidth onClick={handleSubmit}/>
                             {footer}
 
                         </div>

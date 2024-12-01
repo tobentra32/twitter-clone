@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
+import SessionProvider from "./SessionProvider";
 import Sidebar from "./components/layout/Sidebar"
+import { STATIC_STATUS_PAGE_GET_INITIAL_PROPS_ERROR } from "next/dist/lib/constants";
 
 
 const geistSans = localFont({
@@ -29,12 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider >
+
+        <SessionProvider>
+
           <div className="h-screen bg-black">
             <div className="container h-full mx-auto xl:px-30 max-w-6xl ">
               <div className="grid grid-cols-4 h-full">
-              
-              <Sidebar />
+                <Sidebar />
                 <div className="
                 col-span-3
                 lg:col-span-2
@@ -47,7 +49,11 @@ export default function RootLayout({
               </div>
             </div>
           </div>
+
         </SessionProvider>
+        
+          
+       
       </body>
     </html>
   );

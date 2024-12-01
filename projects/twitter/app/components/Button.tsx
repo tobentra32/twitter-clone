@@ -1,10 +1,12 @@
-interface ButtonProps {
+"use client"
+
+export interface ButtonProps {
     label: string;
     secondary?: boolean;
     fullWidth?: boolean;
     large?: boolean;
     onClick: () => void;
-    disabed?: boolean;
+    disabled?: boolean;
     outline?: boolean;
 }
 
@@ -14,7 +16,7 @@ const Button = ({
     fullWidth,
     large,
     onClick,
-    disabed,
+    disabled,
     outline
 }:ButtonProps) => {
     return(
