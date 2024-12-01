@@ -8,14 +8,11 @@ export default function Home() {
   
   return (
    <>
+   
 
     <LoginModal />
     <RegisterModal />
-    
     <Header showBackArrow label="Home"/>
-
-    
-    
    </>
   );
 }
