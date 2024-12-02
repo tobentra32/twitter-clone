@@ -3,6 +3,7 @@ import useLoginModal from "../../hooks/useLoginModal";
 import Input from "../Input";
 import Modal,{ ModalProps } from "../../components/Modal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import { signIn } from "next-auth/react";
 
 const LoginModal = () => {
     const loginModal = useLoginModal();
@@ -27,6 +28,10 @@ const LoginModal = () => {
 
         try {
             setIsLoading(true);
+            await signIn('credentials',{
+                email,
+                password
+            })
             // TODO AND LOGIN
             loginModal.onClose();
         } catch (error) {
@@ -35,7 +40,7 @@ const LoginModal = () => {
             setIsLoading(false);
         }
 
-    },[loginModal]);
+    },[loginModal,email,password]);
 
     const footerContent = (
 

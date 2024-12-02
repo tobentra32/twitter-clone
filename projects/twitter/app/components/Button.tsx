@@ -22,13 +22,15 @@ const Button = ({
     return(
 
         <button
+          onClick={onClick}
+          disabled={disabled}
           className={
             `
-                disabled:opacity-78
+                disabled:opacity-50
                 disabled:cursor-not-allowed
                 rounded-full
                 font-semibold
-                hover:opacity-400
+                hover:opacity-75
                 transition
                 border-2
                 ${fullWidth ? 'w-full' : 'w-fit'}

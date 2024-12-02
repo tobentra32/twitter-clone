@@ -1,31 +1,51 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from 'bcrypt'
-import prisma from '@/app/libs/prismadb'
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    if (req.method !== 'POST') {
-        return res.status(405).end();
-    }
+import { NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import prisma from "@/app/libs/prismadb";
+import { z } from "zod";
 
+// Input validation schema
+const userSchema = z.object({
+    email: z.string().email(),
+    username: z.string().min(1),
+    name: z.string().min(1),
+    password: z.string().min(6),
+});
+
+export async function POST(req: Request) {
     try {
-        const { email, username, name, password } = req.body;
-        const hashedPassword =await bcrypt.hash(password, 12);
+        const body = await req.json();
+
+        // Validate input data
+        const validatedData = userSchema.parse(body);
+        const { email, username, name, password } = validatedData;
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        // Save the user in the database
         const user = await prisma.user.create({
             data: {
                 email,
                 username,
                 name,
-                hashedPassword
-            }
-
+                hashedPassword,
+            },
         });
-        return res.status(200).json(user);
+
+        // Return the created user
+        return NextResponse.json(user, { status: 201 });
     } catch (error) {
-        console.log(error);
-        return res.status(400).end();
+        if (error instanceof z.ZodError) {
+            return NextResponse.json(
+                { errors: error.errors },
+                { status: 400 }
+            );
+        }
+
+        console.error("Server Error:", error);
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
     }
-    
-    
 }
