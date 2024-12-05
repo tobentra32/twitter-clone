@@ -6,7 +6,7 @@ import Modal,{ ModalProps } from "../../components/Modal";
 import axios from "axios";
 import { toast } from 'react-hot-toast';
 import { signIn } from "next-auth/react";
-
+import { useRouter } from "next/navigation";
 
 const RegisterModal = () => {
     const loginModal = useLoginModal();
@@ -29,6 +29,8 @@ const RegisterModal = () => {
 
     },[isLoading, registerModal, loginModal]);
 
+    const router = useRouter();
+
     
     const onSubmit = useCallback(async () => {
 
@@ -37,13 +39,17 @@ const RegisterModal = () => {
         try {
             setIsLoading(true);
 
-            await axios.post('/api/register', {
+            const res = await axios.post('/api/register', {
                 email,
                 password,
                 username,
                 name
             });
             toast.success('Account created.');
+            if (res.status === 200) {
+                router.push('/');
+                
+            }
             
             signIn('credentials', {
                 email,
@@ -64,6 +70,7 @@ const RegisterModal = () => {
         <div className="flex flex-col gap-4">
             <Input
                placeholder="Email"
+               type="email"
                onChange={(e)=> setEmail(e.target.value)}
                value= {email}
                disabled={isLoading}
@@ -82,6 +89,7 @@ const RegisterModal = () => {
             />
             <Input
                placeholder="Password"
+               type="password"
                onChange={(e)=> setPassword(e.target.value)}
                value= {password}
                disabled={isLoading}

@@ -1,3 +1,4 @@
+"use client"
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import SidebarLogo from "./SidebarLogo";

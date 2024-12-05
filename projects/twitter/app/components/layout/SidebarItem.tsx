@@ -1,4 +1,6 @@
 "use client"
+import useCurrentUser from "@/app/hooks/useCurrentUser";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
@@ -8,30 +10,35 @@ interface SidebarItemProps {
     href?: string;
     icon: IconType
     onClick?: () => void;
+    auth?: boolean;
 }
 
 const SidebarItem = ({
     label,
     href,
     icon:Icon,
-    onClick
+    onClick,
+    auth
 }:SidebarItemProps) => {
+    const {data: currentUser} = useCurrentUser();
+    const loginModal = useLoginModal();
     const router = useRouter();
     const handkleClick = useCallback(()=>{
         if (onClick) {
             return onClick();
         }
 
-        if (href) {
+        if (auth && !currentUser) {
+            loginModal.onOpen();
+
+        } else if (href) {
 
             router.push(href);
 
         }
 
-        
 
-
-    },[router,onClick,href]);
+    },[router,onClick,href,currentUser,auth,loginModal]);
 
 
     return (
